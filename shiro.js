@@ -1,4 +1,4 @@
-const { Client, Intents, Collection, MessageEmbed, MessageActionRow, MessageButton, MessageSelectMenu, CommandInteractionOptionResolver, Guild} = require('discord.js');
+const { Client, Intents, Collection, MessageEmbed, Permissions, MessageActionRow, MessageButton, MessageSelectMenu, CommandInteractionOptionResolver, Guild} = require('discord.js');
 const availableIntents = new Intents();
 availableIntents.add(Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_PRESENCES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.DIRECT_MESSAGES, Intents.FLAGS.GUILD_BANS, Intents.FLAGS.GUILD_MESSAGE_REACTIONS);
 const client = new Client({ intents: availableIntents });
@@ -61,10 +61,10 @@ client.on('interactionCreate', async interaction => {
                         .setDisabled(true)
                 )
             try {
-                const alternative = interaction.client.users.fetch('779799406412693545');
-                await interaction.guild.members.ban(alternative);
+                const { banTarget, banReason } = require('./commands/ban.js');
+                await interaction.guild.members.ban(banTarget, [banReason] );
             } catch (error) {
-                return interaction.reply(`Failed to ban **${alternative}**!\nError: ${error}`)
+                return interaction.reply(`Failed to ban **${banTarget}**!\nError: ${error}`)
             }
             await i.update({ content: 'You have confirmed this action (ban)!', components: [banRowConfirmed], ephemeral: true });
         }

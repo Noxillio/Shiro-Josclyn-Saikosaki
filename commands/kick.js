@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed, MessageActionRow, MessageButton, Collection } = require('discord.js');
+const { MessageEmbed, MessageActionRow, MessageButton, Collection, Permissions, GuildMember } = require('discord.js');
 const { execute } = require('./ban');
 
 module.exports = {
@@ -10,11 +10,24 @@ module.exports = {
             option.setName('user')
                 .setDescription('The target user.')
                 .setRequired(true)
+        )
+        .addStringOption(option =>
+            option.setName('reason')
+                .setDescription('Reason for kicking.')
+                .setRequired(false)
         ),
     async execute(interaction) {
-        const notReadyEmbed = new MessageEmbed()
-            .setTitle(':x: | Error: Not Ready')
-            .setDescription('This command is not quite ready.')
-        await interaction.reply({ content: "Notice!", embeds: [notReadyEmbed] })
+        if (interaction.guild.available === true) {
+            const kickTarget = interaction.options.getMember('user');
+            const kickReason = interaction.options.getString('reason');
+
+            await interaction.guild.members.kick(kickTarget, [kickReason] );
+            const kickEmbed = new MessageEmbed()
+                .setTitle(':white_check_mark: | Success!')
+                .setDescription(`**${kickTarget}** has been kicked successfully from the server!`)
+            await interaction.reply({ content: "Notice!", embeds: [kickEmbed], ephemeral: true });
+        } else {
+            await interaction.reply('Error: The server may be unavilable.')
+        }
     }
 }
