@@ -37,7 +37,7 @@ module.exports = {
             else if (!author.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
                 const banEmbedFail = new MessageEmbed()
                     .setTitle('Notice!')
-                    .setDescription(`An error has occurred!\nYou (${author.tag}) do not have the proper permission(s) (\`BAN_MEMBERS\`) to execute this command!`)
+                    .setDescription(`An error has occurred!\nYou (${author}) do not have the proper permission(s) (\`BAN_MEMBERS\`) to execute this command!`)
                 await interaction.reply({ content: "Notice!", embeds: [banEmbedFail], ephemeral: true });
             }
 
@@ -77,7 +77,7 @@ module.exports = {
                                 .setDisabled(true)
                         )
                     try {
-                        await interaction.guild.members.ban(banTarget, [banReason] );
+                        await interaction.guild.members.ban(banTarget, [`${banReason} | Banned by ${author}`] );
                         await i.update({ content: `You have banned ${banTarget}!\nReason: ${banReason}`, components: [banRowConfirmed], ephemeral: true });
                     } catch (error) {
                         return interaction.reply(`Failed to ban **${banTarget}**!\nError: ${error}`)
