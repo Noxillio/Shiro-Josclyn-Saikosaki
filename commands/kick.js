@@ -23,16 +23,25 @@ module.exports = {
                 const kickTarget = interaction.options.getMember('user');
                 const kickReason = interaction.options.getString('reason');
 
-                await interaction.guild.members.kick(kickTarget, [kickReason] );
-                const kickEmbed = new MessageEmbed()
-                    .setTitle(':white_check_mark: | Success!')
-                    .setDescription(`**${kickTarget}** has been kicked successfully from the server!`)
-                await interaction.reply({ content: "Notice!", embeds: [kickEmbed], ephemeral: true });
+                try {
+                    await kickTarget.send({ content: `You have been kicked from **${interaction.guild.name}** by ${author}!\nReason: ${kickReason}`, ephemeral: true });
+                } catch (error) {
+                    console.error(error)
+                    await interaction.reply({ content: `Error: I could not notify ${kickTarget} about their removal from the server.`, ephemeral: true });
+                }
+                finally {
+                    await interaction.guild.members.kick(kickTarget, [kickReason] );
+                    const kickEmbed = new MessageEmbed()
+                        .setTitle(':white_check_mark: | Success!')
+                        .setDescription(`**${kickTarget}** has been kicked successfully from the server!`)
+                        .setColor('#00ff00')
+                    await interaction.reply({ content: "Notice!", embeds: [kickEmbed], ephemeral: true });
+                }
             }
             else if (!author.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) {
                 const kickEmbedFail = new MessageEmbed()
                     .setTitle('Notice!')
-                    .setDescription(`An error has occurred!\nYou (${author.tag}) do not have the proper permission(s) (\`KICK_MEMBERS\`) to execute this command!`)
+                    .setDescription(`An error has occurred!\nYou (${author}) do not have the proper permission(s) (\`KICK_MEMBERS\`) to execute this command!`)
 
                 await interaction.reply({ content: "Notice!", embeds: [kickEmbedFail], ephemeral: true });
             }

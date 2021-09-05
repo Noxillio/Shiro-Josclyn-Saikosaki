@@ -27,51 +27,6 @@ client.on('interactionCreate', async interaction => {
 
     // const filter = i => i.customId === 'primary' && i.user.id === '122157285790187530';
 
-    const collector = interaction.channel.createMessageComponentCollector({ time: 15000 });
-
-    collector.on('collect', async i => {
-        if (i.customId === 'banCancel') {
-            const banRowCanceled = new MessageActionRow()
-                .addComponents(
-                    new MessageButton()
-                        .setCustomId('banCancelled')
-                        .setLabel('Cancel')
-                        .setStyle('SUCCESS')
-                        .setDisabled(true),
-                    new MessageButton()
-                        .setCustomId('banDisabled')
-                        .setLabel('Ban')
-                        .setStyle('DANGER')
-                        .setDisabled(true)
-                )
-            await i.update({ content: 'You have canceled this action (ban)!', components: [banRowCanceled] });
-        }
-        else if (i.customId === 'banConfirm') {
-            const banRowConfirmed = new MessageActionRow()
-                .addComponents(
-                    new MessageButton()
-                        .setCustomId('banCancelDisabled')
-                        .setLabel('Cancel')
-                        .setStyle('SECONDARY')
-                        .setDisabled(true),
-                    new MessageButton()
-                        .setCustomId('banConfirmed')
-                        .setLabel('Ban')
-                        .setStyle('DANGER')
-                        .setDisabled(true)
-                )
-            try {
-                var banread = require('./commands/ban');
-                global.banTarget
-                global.banReason
-                await interaction.guild.members.ban(banTarget, [banReason] );
-            } catch (error) {
-                return interaction.reply(`Failed to ban **${banTarget}**!\nError: ${error}`)
-            }
-            await i.update({ content: 'You have confirmed this action (ban)!', components: [banRowConfirmed], ephemeral: true });
-        }
-    });
-
 	const command = client.commands.get(interaction.commandName);
 
 	if (!command) return;
