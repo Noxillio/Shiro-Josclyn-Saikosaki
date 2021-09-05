@@ -5,7 +5,7 @@ const { execute } = require('./ban');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('meminfo')
-        .setDescription('Retrieves information about the author (user executing the slash command).'),
+        .setDescription('Retrieves information about the author (user executing the slash command - SJS).'),
     async execute(interaction) {
         const infoEmbed = new MessageEmbed()
             .setTitle(interaction.user.tag)
@@ -13,6 +13,6 @@ module.exports = {
             .setColor(interaction.member.displayHexColor)
             .setThumbnail(interaction.user.displayAvatarURL)
 
-        await interaction.reply({ content: "Success!", embeds: [infoEmbed] });
+        await interaction.reply({ content: "Success!", embeds: [infoEmbed], ephemeral: true });
     }
 }

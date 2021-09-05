@@ -61,7 +61,9 @@ client.on('interactionCreate', async interaction => {
                         .setDisabled(true)
                 )
             try {
-                const { banTarget, banReason } = require('./commands/ban.js');
+                var banread = require('./commands/ban');
+                global.banTarget
+                global.banReason
                 await interaction.guild.members.ban(banTarget, [banReason] );
             } catch (error) {
                 return interaction.reply(`Failed to ban **${banTarget}**!\nError: ${error}`)

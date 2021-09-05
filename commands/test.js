@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
+const { MessageEmbed, MessageActionRow, MessageButton, Permissions, GuildMember } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -10,7 +10,13 @@ module.exports = {
 				.setDescription('Target user.')
 		),
 	async execute(interaction) {
-		const targetUser = interaction.options.getUser('user');
-		await interaction.reply(`\`True\` | ${targetUser}`);
+		const targetUser = interaction.options.getMember('user');
+		const author = interaction.member;
+		if (author.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
+			await interaction.reply({ content: `You have \`ADMINISTRATOR\` permissions.\nYour chosen target: | ${targetUser}`, ephemeral: true });
+		}
+		else if (!author.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
+			await interaction.reply({ content: `You do __NOT__ have \`ADMINISTRATOR\` permissions.\nYour chosen target: ${targetUser}`, ephemeral: true });
+		}
 	},
 };
