@@ -42,7 +42,7 @@ module.exports = {
 
                 collector.on('collect', async i => {
                     if (i.customId === 'pardonCancel') {
-                        const pardonRowCanceled = new MessageActionRow()
+                        const pardonRowCancelled = new MessageActionRow()
                             .addComponents(
                                 new MessageButton()
                                     .setCustomId('pardonCancelled')
@@ -55,7 +55,7 @@ module.exports = {
                                     .setStyle('SECONDARY')
                                     .setDisabled(true)
                             )
-                        await i.update({ content: `You have canceled this action (pardon/unban)!\nTarget user: ${userId}`, components: [pardonRowCanceled], ephemeral: true });
+                        await i.update({ content: `You have cancelled this action (pardon/unban)!\nTarget user: ${userId}`, components: [pardonRowCancelled], ephemeral: true });
                     }
                     else if (i.customId === 'pardonConfirm') {
                         const pardonRowConfirmed = new MessageActionRow()

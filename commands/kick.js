@@ -45,7 +45,7 @@ module.exports = {
 
             collector.on('collect', async i => {
                 if (i.customId === 'kickCancel') {
-                    const kickRowCanceled = new MessageActionRow()
+                    const kickRowCancelled = new MessageActionRow()
                         .addComponents(
                             new MessageButton()
                                 .setCustomId('kickCancelled')
@@ -58,7 +58,7 @@ module.exports = {
                                 .setStyle('DANGER')
                                 .setDisabled(true)
                         )
-                    await i.update({ content: `You have canceled this action (kick)!\nTarget user: ${kickTarget}`, components: [kickRowCanceled], ephemeral: true });
+                    await i.update({ content: `You have cancelled this action (kick)!\nTarget user: ${kickTarget}`, components: [kickRowCancelled], ephemeral: true });
                 }
                 else if (i.customId === 'kickConfirm') {
                     const kickRowConfirmed = new MessageActionRow()

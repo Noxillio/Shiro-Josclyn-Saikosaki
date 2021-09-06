@@ -19,6 +19,6 @@ module.exports = {
                     .setStyle('LINK')
             );
 
-        await interaction.reply({ content: ":spades: | Helpful buttons for the future.", embeds: [helpEmbed], components: [helpRow]});
+        await interaction.reply({ content: ":spades: | Helpful buttons for the future.", embeds: [helpEmbed], components: [helpRow], ephemeral: true });
     }
 }

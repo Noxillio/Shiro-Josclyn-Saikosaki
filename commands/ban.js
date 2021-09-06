@@ -47,7 +47,7 @@ module.exports = {
 
             collector.on('collect', async i => {
                 if (i.customId === 'banCancel') {
-                    const banRowCanceled = new MessageActionRow()
+                    const banRowCancelled = new MessageActionRow()
                         .addComponents(
                             new MessageButton()
                                 .setCustomId('banCancelled')
@@ -60,7 +60,7 @@ module.exports = {
                                 .setStyle('DANGER')
                                 .setDisabled(true)
                         )
-                    await i.update({ content: `You have canceled this action (ban)!\nTarget user: ${banTarget}`, components: [banRowCanceled], ephemeral: true });
+                    await i.update({ content: `You have cancelled this action (ban)!\nTarget user: ${banTarget}`, components: [banRowCancelled], ephemeral: true });
                 }
                 else if (i.customId === 'banConfirm') {
                     const banRowConfirmed = new MessageActionRow()
