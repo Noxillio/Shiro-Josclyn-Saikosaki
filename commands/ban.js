@@ -43,7 +43,7 @@ module.exports = {
 
             // Button interaction
 
-            const collector = interaction.channel.createMessageComponentCollector({ time: 15000 });
+            const collector = interaction.channel.createMessageComponentCollector({ time: 60000 });
 
             collector.on('collect', async i => {
                 if (i.customId === 'banCancel') {
@@ -60,7 +60,7 @@ module.exports = {
                                 .setStyle('DANGER')
                                 .setDisabled(true)
                         )
-                    await i.update({ content: `You have canceled this action (ban)!\nTarget user: ${banTarget}`, components: [banRowCanceled] });
+                    await i.update({ content: `You have canceled this action (ban)!\nTarget user: ${banTarget}`, components: [banRowCanceled], ephemeral: true });
                 }
                 else if (i.customId === 'banConfirm') {
                     const banRowConfirmed = new MessageActionRow()

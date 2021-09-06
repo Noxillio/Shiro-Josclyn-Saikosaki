@@ -41,7 +41,7 @@ module.exports = {
 
                 await interaction.reply({ content: "Notice!", embeds: [kickEmbedFail], ephemeral: true });
             }
-            const collector = interaction.channel.createMessageComponentCollector({ time: 15000 });
+            const collector = interaction.channel.createMessageComponentCollector({ time: 60000 });
 
             collector.on('collect', async i => {
                 if (i.customId === 'kickCancel') {
@@ -58,7 +58,7 @@ module.exports = {
                                 .setStyle('DANGER')
                                 .setDisabled(true)
                         )
-                    await i.update({ content: `You have canceled this action (kick)!\nTarget user: ${kickTarget}`, components: [kickRowCanceled] });
+                    await i.update({ content: `You have canceled this action (kick)!\nTarget user: ${kickTarget}`, components: [kickRowCanceled], ephemeral: true });
                 }
                 else if (i.customId === 'kickConfirm') {
                     const kickRowConfirmed = new MessageActionRow()
