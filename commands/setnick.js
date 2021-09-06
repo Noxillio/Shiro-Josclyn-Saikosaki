@@ -1,6 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed, MessageActionRow, MessageButton, Permissions } = require('discord.js');
-const { execute } = require('./test');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -73,13 +72,13 @@ module.exports = {
                         await interaction.guild.members.edit(targetMember, { nick: nickname } );
                         await i.update({ content: `You have updated **${targetMember}\'s nickname to: ${nickname}**`, components: [nicknameRowConfirmed], ephemeral: true });
                     } catch (error) {
-                        return interaction.reply(`Failed to apply nickname to **${targetMember}**!\nError: ${error}`)
+                        return i.update(`Failed to apply nickname to **${targetMember}**!\nError: ${error}`)
                     }
                 }
             });
         }
         else if (!author.permissions.has(Permissions.FLAGS.MANAGE_NICKNAMES)) {
-            end
+            interaction.reply({ content: `Error: You (${author}) are missing permission(s)! [\`MANAGE_NICKNAMES\`]`, ephemeral: true })
         }
     }
 }

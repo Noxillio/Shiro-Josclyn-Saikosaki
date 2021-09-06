@@ -13,7 +13,7 @@ module.exports = {
                 .setThumbnail(interaction.guild.iconURL)
                 .setColor('#c21313')
 
-            await interaction.reply({ content: "Fetched!", embeds: [server_info_embed] });
+            await interaction.reply({ content: "Fetched!", embeds: [server_info_embed], ephemeral: true });
         } else if (interaction.guild.available === false) {
             const errorEmbed = new MessageEmbed()
                 .setTitle(':warning: Error! :warning:')
