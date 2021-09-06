@@ -78,7 +78,7 @@ module.exports = {
                         await interaction.guild.members.kick(kickTarget, [`${kickReason} | Kicked by ${author}`] );
                         await i.update({ content: `You have kicked **${kickTarget}**!\nReason: ${kickReason}`, components: [kickRowConfirmed], ephemeral: true });
                     } catch (error) {
-                        return interaction.reply(`Failed to kick **${kickTarget}**!\nError: ${error}`)
+                        return i.update(`Failed to kick **${kickTarget}**!\nError: ${error}`)
                     }
                 }
             });

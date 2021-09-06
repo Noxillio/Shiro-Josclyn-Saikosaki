@@ -80,7 +80,7 @@ module.exports = {
                         await interaction.guild.members.ban(banTarget, [`${banReason} | Banned by ${author}`] );
                         await i.update({ content: `You have banned ${banTarget}!\nReason: ${banReason}`, components: [banRowConfirmed], ephemeral: true });
                     } catch (error) {
-                        return interaction.reply(`Failed to ban **${banTarget}**!\nError: ${error}`)
+                        return i.update(`Failed to ban **${banTarget}**!\nError: ${error}`)
                     }
                 }
             });
