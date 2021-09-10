@@ -12,7 +12,7 @@ module.exports = {
                 .setRequired(true)    
         ),
     async execute(interaction, option) {
-        const number = option.getNumber('num');
+        const number = interaction.options.getNumber('number');
         await interaction.reply(`Target number selected: \`${number}\``);
     }
 }
