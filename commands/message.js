@@ -28,7 +28,7 @@ module.exports = {
 
         const isBot = new MessageEmbed()
             .setTitle('To Be Advised!')
-            .setDescription(`The target user (${targetUser}) is a bot account and cannot be messaged!`)
+            .setDescription(`The target user (${targetUser}) is a bot account and cannot be messaged!\n[████\_\_\_\_\_\_]`)
             .setColor('#f80000')
 
         const notOwner = new MessageEmbed()
@@ -38,35 +38,35 @@ module.exports = {
 
         // Fetching
         await interaction.reply({ content: `:cd: | Fetching data...\n[         ]`, ephemeral: true});
-        await sleep(2000)
+        await sleep(1500)
         await interaction.editReply({ content: `:dvd: | Checking account registration...\n[█\_\_\_\_\_\_\_\_\_]` });
-        await sleep(2000)
+        await sleep(1500)
 
         try {
             for (const userId of registered) {
                 if (author.id === userId) {
                     await interaction.editReply(`:cd: | Account found (registered).\n[███\_\_\_\_\_\_\_]`);
-                    await sleep(2000);
+                    await sleep(1500);
                     await interaction.editReply(`:dvd: | Checking target user...\n[████\_\_\_\_\_\_]`);
-                    await sleep(2000)
+                    await sleep(1500)
                     if (targetUser.bot) {
                         await interaction.editReply({ content: `Error!`, embeds: [isBot] });
                     } else if (!targetUser.bot) {
                         await interaction.editReply(`:cd: | Validated non-bot account.\n[█████\_\_\_\_]`);
-                        await sleep(2000);
+                        await sleep(1500);
                         await interaction.editReply(`:outbox_tray: | Sending message...\n[██████\_\_\_]`);
-                        await sleep(2000);
+                        await sleep(1500);
                         await interaction.editReply(`:outbox_tray: | Sending message...\n[████████\_\_]`);
-                        await sleep(2000);
+                        await sleep(1500);
                         try {
                             await targetUser.send(authorMessage);
-                            await sleep(2000);
+                            await sleep(1500);
                             await interaction.editReply(`:white_check_mark: | Message sent!\n[██████████]\n\nYour message to ${targetUser} is: ${authorMessage}`);
                         } catch (error) {
                             await interaction.editReply(`:x: | Message failed!\n[█████████\_]\nError - \`${error}\``);
                         }
                     }
-                } else if (!author.id === userId) {
+                } else if (author.id !== userId) {
                     await interaction.editReply(`:x: | Failure (Account not found)!\n[█\_\_\_\_\_\_\_\_\_]`)
                 }
 

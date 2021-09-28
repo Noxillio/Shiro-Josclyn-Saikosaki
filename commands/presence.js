@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed, MessageActionRow, MessageButton, Permissions } = require('discord.js');
-const availablePresences = ["online", "idle", "dnd", "stream"];
+const availablePresences = ["online", "idle", "dnd"];
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
