@@ -13,6 +13,6 @@ module.exports = {
             .setTitle('To Be Advised!')
             .setDescription(`${guildMember}, sorry, this command is not ready yet!`)
             .setColor('#ff0000')
-        await interaction.reply({ content: "[]", embeds: [statisticsEmbedNotReady], ephemeral: true });
+        await interaction.reply({ content: null, embeds: [statisticsEmbedNotReady], ephemeral: true });
     }
 }
