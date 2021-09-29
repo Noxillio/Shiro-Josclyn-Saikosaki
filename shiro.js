@@ -20,7 +20,7 @@ client.once('ready', () => {
 
  const bot_developer = null;
 
-const command = client.application?.commands.fetch('822311111570489435');
+const command = client.application?.commands.fetch('681898763249254463');
 
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;

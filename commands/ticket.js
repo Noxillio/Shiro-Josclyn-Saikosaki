@@ -22,7 +22,7 @@ module.exports = {
                 await sleep(3000);
                 const secondServerInvite = targetGuild.invites.create(newChannel.id, { maxAge: 300, maxUses: 1, temporary: true, unique: true }).then(ownerInvite => {owner.send(`To be advised:\n${author} is requesting your presence!\nInvite: https://discord.com/invite/${ownerInvite.code}`)});
                 await sleep(10000);
-                await owner.send('This message has been set seven (10) seconds since...');
+                await owner.send('This message has been set ten (10) seconds since...');
             } catch (error) {
                 await owner.send(`Error - ${error}`);
             }

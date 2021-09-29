@@ -8,27 +8,30 @@ module.exports = {
         .setName('verify')
         .setDescription('Verifies any association with the project.'),
     async execute(interaction) {
-        const author = interaction.member;
+        const currentUser = interaction.user;
+        const currentMember = interaction.member;
 
         // Embed - Success
         const embedSuccess = new MessageEmbed()
             .setTitle(':white_check_mark: | Verification - Successful!')
-            .setDescription(`You (${author}) are the developer of this very project!`)
+            .setDescription(`You (${currentUser}) are the developer/maintainer of this Discord project!`)
             .setColor('#008000')
+            .setAuthor(`${currentUser.tag}`, `${currentUser.avatarURL({ format: "png", size: 256 })}`)
 
         // Embed - Failure
         const embedFailure = new MessageEmbed()
             .setTitle(':x: | Verification - Failure!')
-            .setDescription(`You (${author}) are in no way associated with this project!`)
+            .setDescription(`You (${currentUser}) are in no way associated with this project!`)
             .setColor('#ff0000')
+            .setAuthor(`${currentUser.tag}`, `${currentUser.avatarURL({ format: "png", size: 256 })}`)
 
         // Find role
         for (const userId of developers) {
-            console.log(`${userId} || ${author.id}`);
-            if (userId === author.id) {
-                await interaction.reply({ content: "[]", embeds: [embedSuccess] });
+            console.log(`${userId} || ${currentUser.id}`);
+            if (userId === currentUser.id) {
+                await interaction.reply({ content: null, embeds: [embedSuccess] });
             } else {
-                await interaction.reply({ content: "[]", embeds: [embedFailure] });
+                await interaction.reply({ content: null, embeds: [embedFailure] });
             } break
         }
     }
