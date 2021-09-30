@@ -17,10 +17,10 @@ module.exports = {
 
         //Embed
         const updateEmbed = new MessageEmbed()
-            .setTitle('Update v2021.9.28.1')
-            .setDescription(`What's new in version \`2021.9.28.1\`:\n- Transferred all current migration commands to the main project.\n- Slash command support.\n- Migrated over from Python to Node JS (JavaScript).\n\n**The Bad News**\n- Only a small percentage of the commands are available in the new setup.\n- Returned to the ALPHA stage (some commands are expected to break the entire bot).`)
+            .setTitle('Update v2021.9.30.10')
+            .setDescription(`What's new in version \`2021.9.30.10\`:\n- New commands (migrated)!\n\n- report\n- edit_channel_name\n- nsfw\n\nMore commands are still in the works, these commands have been tested and work as programmed.\n\nCommand (ticket) is broken.`)
             .setColor('#c21313')
-            .setAuthor(`${botOwner.tag}`, `${botOwner.avatarURL({ format: "png", size: 256 })}`)
+            .setAuthor(`${botOwner.tag}`, `${botOwner.avatarURL({ format: "png", size: 512 })}`)
             .setThumbnail(`${botOwner.avatarURL({ format: "png", size: 1024 })}`)
         await interaction.reply({ content: null, embeds: [updateEmbed], ephemeral: true });
     }
