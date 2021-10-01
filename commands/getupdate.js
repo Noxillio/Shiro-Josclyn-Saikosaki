@@ -18,8 +18,8 @@ module.exports = {
 
         //Embed
         const updateEmbed = new MessageEmbed()
-            .setTitle('Update v2021.9.30.10')
-            .setDescription(`What's new in version \`2021.9.30.10\`:\n- New commands (migrated)!\n\n- report\n- edit_channel_name\n- nsfw\n\nMore commands are still in the works, these commands have been tested and work as programmed.\n\nCommand (ticket) is broken.`)
+            .setTitle('Update v2021.10.1.10')
+            .setDescription(`What's new in version \`2021.10.1.10\`:\n- No patch notes available [Currently being updated...]`)
             .setColor('#c21313')
             .setAuthor(`${developer.tag}`, `${developer.avatarURL({ format: "png", size: 512 })}`)
             .setThumbnail(`${developer.avatarURL({ format: "png", size: 1024 })}`)

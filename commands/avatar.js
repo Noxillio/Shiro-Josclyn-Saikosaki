@@ -15,14 +15,15 @@ module.exports = {
         const targetUser = interaction.options.getUser('user');
 
         if (targetUser !== null) {
-            const avatarEmbed = new MessageEmbed()
-                .setTitle(targetUser.tag)
+            const avatarEmbedRegular = new MessageEmbed()
+                .setTitle(`${targetUser.tag} | Static`)
                 .setColor('#c21313')
                 .setImage(targetUser.avatarURL({ format: "png", size: 1024 }))
-            await interaction.reply({ content: null, embeds: [avatarEmbed], ephemeral: true });
+
+            await interaction.reply({ content: null, embeds: [avatarEmbedRegular], ephemeral: true });
         } else if (targetUser === null) {
             const authorAvatarEmbed = new MessageEmbed()
-                .setTitle(currentUser.tag)
+                .setTitle(`${currentUser.tag} | Static (personal)`)
                 .setColor('#c21313')
                 .setImage(currentUser.avatarURL({ format: "png", size: 1024 }))
             await interaction.reply({ content: null, embeds: [authorAvatarEmbed], ephemeral: true });
