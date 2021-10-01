@@ -15,9 +15,10 @@ module.exports = {
         const author = interaction.user;
         const guildId = interaction.options.getString('id');
         const targetGuild = interaction.client.guilds.cache.get(guildId);
+        const developer = interaction.client.users.cache.get('635673822934204417');
 
         if (targetGuild.available) {
-            if (author.id === '635673822934204417') {
+            if (author.id === developer.id) {
                 const leaveGuildRow = new MessageActionRow()
                     .addComponents(
                         new MessageButton()
@@ -73,7 +74,7 @@ module.exports = {
                     }
                 });
             }
-            else if (!author.id === '635673822934204417') {
+            else if (author.id !== developer.id) {
                 await interaction.reply({ content: "Error: Your account is not registered.", ephemeral: true });
             }
         }
