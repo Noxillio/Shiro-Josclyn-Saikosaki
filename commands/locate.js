@@ -29,7 +29,7 @@ module.exports = {
                     // Loop through all guilds.
                     for (const guilds of allGuilds) {
                         if (guilds.members.cache.filter(user => user.id === targetUser.id)) {
-                            await interaction.channel.send(`${guilds}`);
+                            await interaction.channel.send(`${guilds} (\`${guilds.id}\`)`);
                             await sleep(2500);
                         }
                     }

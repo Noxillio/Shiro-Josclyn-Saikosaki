@@ -22,8 +22,13 @@ module.exports = {
         // Embeds
         const embedOptions = new MessageEmbed()
             .setTitle('Proceed?')
-            .setDescription('Are you sure you want to proceed?')
+            .setDescription('Are you sure you want to proceed? (This will terminate the bot\'s connection to Discord.)')
             .setColor('#ff0000')
+            .setAuthor(`${shiroSaikosaki.tag}`, `${shiroSaikosaki.avatarURL({ format: "png", size: 512 })}`)
+        const embedTerminationCanceled = new MessageEmbed()
+            .setTitle('Cancled Termination!')
+            .setDescription('Termination declined!')
+            .setColor('#00ff00')
             .setAuthor(`${shiroSaikosaki.tag}`, `${shiroSaikosaki.avatarURL({ format: "png", size: 512 })}`)
         const clientTerminatedEmbed = new MessageEmbed()
             .setTitle('Terminated!')
@@ -68,7 +73,7 @@ module.exports = {
                                 .setStyle('DANGER')
                                 .setDisabled(true)
                         )
-                    await i.update({ content: null, components: [terminationRowCancelled], ephemeral: true });
+                    await i.update({ content: null, embeds: [embedTerminationCanceled], components: [terminationRowCancelled], ephemeral: true });
                 }
                 else if (i.customId === 'confirmTermination') {
                     const terminationRowConfirmed = new MessageActionRow()
@@ -86,6 +91,7 @@ module.exports = {
                         )
                     try {
                         await i.update({ content: null, embeds: [clientTerminatedEmbed], components: [terminationRowConfirmed], ephemeral: true });
+                        console.log(`The client (${shiroSaikosaki.tag}) has been terminated by ${currentUser.tag}!`);
                         await interaction.client.destroy();
                     } catch (error) {
                         return i.update(`Failed to terminate the client.\nError - ${error}`)
@@ -95,7 +101,8 @@ module.exports = {
         } else if (code !== processedCode) {
             await interaction.reply({ content: null, embeds: [embedFailure], ephemeral: true});
         } else {
-            await interaction.reply({ content: "...", ephemeral: true });
+            const result = await interaction.reply({ content: "...", ephemeral: true });
+            console.log(`${currentUser.tag} tried to terminate the client\'s connection!\n- ${result}`);
         }
     }
 }
