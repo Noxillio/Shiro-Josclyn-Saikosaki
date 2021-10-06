@@ -18,8 +18,8 @@ module.exports = {
 
         //Embed
         const updateEmbed = new MessageEmbed()
-            .setTitle('Update v2021.10.6.1')
-            .setDescription(`What's new in version \`2021.10.6.1\`:\n- Alpha commands:\n- permissions (broken)\n- apply_role (broken).\n\nTested commands (working):\n- edit_role_name (new)\n- create_role (new)\n- delete_role (new)\n- create_channel (new)\n- delete_channel (new)`)
+            .setTitle('Update v2021.10.6.21')
+            .setDescription(`What's new in version \`2021.10.6.21\`:\n- Alpha commands:\n- permissions (broken)\n- apply_role (broken).\n\nTested commands (working):\n- edit_role_name (new)\n- create_role (new)\n- delete_role (new)\n- create_channel (new)\n- delete_channel (new)`)
             .setColor('#c21313')
             .setAuthor(`${developer.tag}`, `${developer.avatarURL({ format: "png", size: 512 })}`)
             .setThumbnail(`${developer.avatarURL({ format: "png", size: 1024 })}`)
