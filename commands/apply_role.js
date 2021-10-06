@@ -45,7 +45,7 @@ module.exports = {
         if (currentMember.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) {
             try {
                 // Add target role to member ??
-                await currentGuild.members.add(targetUser, { roles: targetRole } );
+                await interaction.guild.members.add(targetUser, { roles: [targetRole] });
             } catch (error) {
                 const embedError = new MessageEmbed() // Forgetful
                     .setTitle(':x: | You failed, Suzuko!')
