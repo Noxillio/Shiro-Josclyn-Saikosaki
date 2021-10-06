@@ -43,8 +43,12 @@ module.exports = {
 
         if (currentGuild.available) {
             if (currentMember.permissions.has(Permissions.FLAGS.MANAGE_CHANNELS)) {
-                await targetChannel.edit({ name: channelName, reason: `Updated by ${currentUser.tag} (${currentUser.id})` })
-                await interaction.reply({ content: null, embeds: [embedSuccess], ephemeral: true });
+                try {
+                    await targetChannel.edit({ name: channelName, reason: `Updated by ${currentUser.tag} (${currentUser.id})` })
+                    await interaction.reply({ content: null, embeds: [embedSuccess], ephemeral: true });
+                } catch (error) {
+                    await interaction.reply({ content: `Suzuko failed with:\n- ${error}`, ephemeral: true });
+                }
             } else if (!currentMember.permissions.has(Permissions.FLAGS.MANAGE_CHANNELS)) {
                 await interaction.reply({ content: null, embeds: [embedMissingPermissions], ephemeral: true });
             }
