@@ -12,13 +12,20 @@ module.exports = {
         .setDescription('Updates the bot\'s status.')
         .addStringOption(option =>
             option.setName('status')
-                .setDescription('[online, idle, dnd]')
-                .setRequired(true)    
+                .setDescription('Set the client\'s status.')
+                .setRequired(true)
+                .addChoice('Online', 'idle')
+                .addChoice('Idle', 'idle')
+                .addChoice('Do Not Disturb', 'dnd')
         )
         .addStringOption(option =>
             option.setName('action')
-                .setDescription('[PLAYING, WATCHING, LISTENING, STREAMING]')
+                .setDescription('Set the client\'s action.')
                 .setRequired(true)
+                .addChoice('Playing', 'PLAYING')
+                .addChoice('Watching', 'WATCHING')
+                .addChoice('Listening', 'LISTENING')
+                .addChoice('Streaming', 'STREAMING')
         )
         .addStringOption(option =>
             option.setName('text')

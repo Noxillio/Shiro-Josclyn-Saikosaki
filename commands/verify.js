@@ -2,6 +2,8 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed, MessageActionRow, MessageButton, Permissions } = require('discord.js');
 
 const developers = ["635673822934204417"];
+const alternative = ["779799406412693545"];
+const projectHelpers = ["400974771942326272"];
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -15,6 +17,20 @@ module.exports = {
         const embedSuccess = new MessageEmbed()
             .setTitle(':white_check_mark: | Verification - Successful!')
             .setDescription(`You (${currentUser}) are the developer/maintainer of this Discord project!`)
+            .setColor('#0000ff')
+            .setAuthor(`${currentUser.tag}`, `${currentUser.avatarURL({ format: "png", size: 256 })}`)
+
+        // Embed - Alternative
+        const embedAlternative = new MessageEmbed()
+            .setTitle(':white_check_mark: | Verification - Successful!')
+            .setDescription(`You (${currentUser}) are the developer/maintainer of this Discord project!\n\nAccount type:\n- \`ALTERNATIVE\``)
+            .setColor('#fff716')
+            .setAuthor(`${currentUser.tag}`, `${currentUser.avatarURL({ format: "png", size: 256 })}`)
+        
+        // Embed - Helper
+        const embedHelper = new MessageEmbed()
+            .setTitle(':white_check_mark: | Verification - Successful!')
+            .setDescription(`You (${currentUser}) are a helper of this Discord project!`)
             .setColor('#008000')
             .setAuthor(`${currentUser.tag}`, `${currentUser.avatarURL({ format: "png", size: 256 })}`)
 
@@ -27,12 +43,19 @@ module.exports = {
 
         // Find role
         for (const userId of developers) {
-            console.log(`${userId} || ${currentUser.id}`);
-            if (userId === currentUser.id) {
-                await interaction.reply({ content: null, embeds: [embedSuccess] });
-            } else {
-                await interaction.reply({ content: null, embeds: [embedFailure] });
-            } break
+            for (const alternativeId of alternative) {
+                for (const helperId of projectHelpers) {
+                    if (userId === currentUser.id) {
+                        await interaction.reply({ content: null, embeds: [embedSuccess] });
+                    } else if (alternativeId === currentUser.id) {
+                        await interaction.reply({ content: null, embeds: [embedAlternative] });
+                    } else if (helperId === currentUser.id) {
+                        await interaction.reply({ content: null, embeds: [embedHelper] });
+                    } else {
+                        await interaction.reply({ content: null, embeds: [embedFailure] });
+                    }
+                }
+            }
         }
     }
 }
