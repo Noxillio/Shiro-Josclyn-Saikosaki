@@ -70,7 +70,7 @@ module.exports = {
                         )
                     try {
                         await interaction.guild.members.edit(targetMember, { nick: nickname } );
-                        await i.update({ content: `You have updated **${targetMember}\'s nickname to: ${nickname}**`, components: [nicknameRowConfirmed], ephemeral: true });
+                        await i.update({ content: `You have updated **${targetMember}\'s** nickname to: ${nickname}`, components: [nicknameRowConfirmed], ephemeral: true });
                     } catch (error) {
                         return i.update(`Failed to apply nickname to **${targetMember}**!\nError: ${error}`)
                     }

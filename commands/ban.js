@@ -10,6 +10,11 @@ module.exports = {
                 .setDescription('Ban the target user (SJS).')
                 .setRequired(true)
         )
+        .addBooleanOption(option =>
+            option.setName('ephemeral')
+                .setDescription('Keep output private?')
+                .setRequired(true) 
+        )
         .addStringOption(option =>
             option.setName('banreason')
                 .setDescription('Reason to ban target user.')  
@@ -17,10 +22,23 @@ module.exports = {
         ),
     async execute(interaction) {
         if (interaction.guild.available) {
+            const shiroSaikosaki = interaction.client.user;
+            const currentGuild = interaction.guild;
             const banTarget = interaction.options.getMember('banuser');
             const banReason = interaction.options.getString('banreason');
-            const author = interaction.member;
-            if (author.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
+            const isEphemeral = interaction.options.getBoolean('ephemeral');
+            const currentUser = interaction.user;
+            const currentMember = interaction.member;
+
+            // Embeds
+            const embedTargetBanReason = new MessageEmbed()
+                .setTitle('To Be Advised!')
+                .setDescription(`You have been banned from **${currentGuild.name}**!\nReason: ${banReason}`)
+                .setColor('#c21313')
+                .setAuthor(shiroSaikosaki.tag, shiroSaikosaki.avatarURL({ format: "png", size: 512 }))
+                .setImage('https://i.ibb.co/HBKzzgq/GAME.gif')
+
+            if (currentMember.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
                 const banRow = new MessageActionRow()
                     .addComponents(
                         new MessageButton()
@@ -32,13 +50,13 @@ module.exports = {
                             .setLabel('Ban')
                             .setStyle('DANGER')
                     )
-                await interaction.reply({ content: `Are you sure you want to ban ${banTarget}?\nReason: ${banReason}`, components: [banRow], ephemeral: true });
+                await interaction.reply({ content: `Are you sure you want to ban ${banTarget}?\nReason: ${banReason}`, components: [banRow], ephemeral: isEphemeral });
             }
-            else if (!author.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
+            else if (!currentMember.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
                 const banEmbedFail = new MessageEmbed()
                     .setTitle('Notice!')
-                    .setDescription(`An error has occurred!\nYou (${author}) do not have the proper permission(s) (\`BAN_MEMBERS\`) to execute this command!`)
-                await interaction.reply({ content: "Notice!", embeds: [banEmbedFail], ephemeral: true });
+                    .setDescription(`An error has occurred!\nYou (${currentUser}) do not have the proper permission(s) (\`BAN_MEMBERS\`) to execute this command!`)
+                await interaction.reply({ content: "Notice!", embeds: [banEmbedFail], ephemeral: isEphemeral });
             }
 
             // Button interaction
@@ -60,7 +78,7 @@ module.exports = {
                                 .setStyle('DANGER')
                                 .setDisabled(true)
                         )
-                    await i.update({ content: `You have cancelled this action (ban)!\nTarget user: ${banTarget}`, components: [banRowCancelled], ephemeral: true });
+                    await i.update({ content: `You have cancelled this action (ban)!\nTarget user: ${banTarget}`, components: [banRowCancelled], ephemeral: isEphemeral });
                 }
                 else if (i.customId === 'banConfirm') {
                     const banRowConfirmed = new MessageActionRow()
@@ -77,8 +95,14 @@ module.exports = {
                                 .setDisabled(true)
                         )
                     try {
-                        await interaction.guild.members.ban(banTarget, [`${banReason} | Banned by ${author}`] );
-                        await i.update({ content: `You have banned ${banTarget}!\nReason: ${banReason}`, components: [banRowConfirmed], ephemeral: true });
+                        try {
+                            await banTarget.send({ content: null, embeds: [embedTargetBanReason] });
+                        } catch (errorTwo) {
+                            null;
+                        } finally {
+                            await interaction.guild.members.ban(banTarget, { reason: `${banReason} | Banned by ${currentUser.tag} (${currentUser.id})` });
+                            await i.update({ content: `You have banned ${banTarget}!\nReason: ${banReason}`, components: [banRowConfirmed], ephemeral: isEphemeral });;
+                        }
                     } catch (error) {
                         return i.update(`Failed to ban **${banTarget}**!\nError: ${error}`)
                     }

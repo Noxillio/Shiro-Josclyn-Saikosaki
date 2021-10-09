@@ -10,20 +10,27 @@ module.exports = {
                 .setDescription('ID of target user.')
                 .setRequired(true)    
         )
+        .addBooleanOption(option =>
+            option.setName('ephemeral')
+                .setDescription('Keep output private?')
+                .setRequired(true)    
+        )
         .addStringOption(option =>
             option.setName('reason')
                 .setDescription('Reason for pardon.')
                 .setRequired(false)
         ),
     async execute(interaction) {
-        const author = interaction.member;
+        const currentMember = interaction.member;
         const currentGuild = interaction.guild;
+        const currentUser = interaction.user;
+        const isEphemeral = interaction.options.getBoolean('ephemeral');
         const userId = interaction.options.getString('id');
         const pardonReason = interaction.options.getString('reason');
-        // const targetUser = interaction.guild.members.resolveId(userId);
+        const targetUser = interaction.client.users.cache.get(userId);
 
         if (currentGuild.available) {
-            if (author.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
+            if (currentMember.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
                 const pardonRow = new MessageActionRow()
                     .addComponents(
                         new MessageButton()
@@ -35,7 +42,7 @@ module.exports = {
                             .setLabel('Confirm')
                             .setStyle('PRIMARY')
                     )
-                await interaction.reply({ content: `Are you sure you want to pardon (unban) **${userId}**?`, components: [pardonRow], ephemeral: true });
+                await interaction.reply({ content: `Are you sure you want to pardon (unban) **${targetUser.tag}** (\`${targetUser.id}\`)?`, components: [pardonRow], ephemeral: isEphemeral });
 
                 // Button interaction.
                 const collector = interaction.channel.createMessageComponentCollector({ time: 60000 });
@@ -55,7 +62,7 @@ module.exports = {
                                     .setStyle('SECONDARY')
                                     .setDisabled(true)
                             )
-                        await i.update({ content: `You have cancelled this action (pardon/unban)!\nTarget user: ${userId}`, components: [pardonRowCancelled], ephemeral: true });
+                        await i.update({ content: `You have cancelled this action (pardon/unban)!\nTarget user: **${targetUser.tag}** (\`${targetUser.id}\`)`, components: [pardonRowCancelled], ephemeral: isEphemeral });
                     }
                     else if (i.customId === 'pardonConfirm') {
                         const pardonRowConfirmed = new MessageActionRow()
@@ -72,15 +79,15 @@ module.exports = {
                                     .setDisabled(true)
                             )
                         try {
-                            await interaction.guild.members.unban(userId, [`${pardonReason} | Pardoned by ${author}`] );
-                            await i.update({ content: `You have pardoned/unbanned ${userId}!\nReason: ${pardonReason}`, components: [pardonRowConfirmed], ephemeral: true });
+                            await interaction.guild.members.unban(targetUser, [`${pardonReason} | Pardoned by ${currentUser.tag} (${currentUser.id})`] );
+                            await i.update({ content: `You have pardoned/unbanned **${targetUser.tag}** (\`${targetUser.id}\`)!\nReason: ${pardonReason}`, components: [pardonRowConfirmed], ephemeral: isEphemeral });
                         } catch (error) {
-                            return i.update(`Failed to pardon/unban **${userId}**!\nError: ${error}`)
+                            return i.update(`Failed to pardon/unban **${targetUser.tag}** (\`${targetUser.id}\`)!\nError: ${error}`)
                         }
                     }
                 });
-            } else if (!author.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
-                await interaction.reply({ content: `You (${author}) do not have permssion (\`BAN_MEMBERS\`) to execute this command!` });
+            } else if (!currentMember.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
+                await interaction.reply({ content: `You (${currentMember}) do not have permssion (\`BAN_MEMBERS\`) to execute this command!`, ephemeral: isEphemeral });
             }
         } else if (!currentGuild.available) {
             return null;

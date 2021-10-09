@@ -1,6 +1,5 @@
 .env
 config.json
 ./commands/command_properties.json
-./commands/sex.js
 .fake
 .ionide
