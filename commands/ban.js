@@ -38,6 +38,13 @@ module.exports = {
                 .setAuthor(shiroSaikosaki.tag, shiroSaikosaki.avatarURL({ format: "png", size: 512 }))
                 .setImage('https://i.ibb.co/HBKzzgq/GAME.gif')
 
+            const embedTargetNotBannable = new MessageEmbed()
+                .setTitle('To Be Advised!')
+                .setDescription(`Discord user (${banTarget}) cannot be banned from this Discord (**${currentGuild.name}** [\`${currentGuild.id}\`])!\n**-!- [ Possible errors ] -!-**\nMissing permission(s):\n- \`BAN_MEMBERS\`\n\nRank:\n- The target user (${banTarget}) may be of a higher rank than the client (${shiroSaikosaki}).`)
+                .setColor('#c21313')
+                .setAuthor(shiroSaikosaki.tag, shiroSaikosaki.avatarURL({ format: "png", size: 512 }))
+                .setImage('https://i.ibb.co/mJmKThP/system-failure-system-down.gif')
+
             if (currentMember.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
                 const banRow = new MessageActionRow()
                     .addComponents(
@@ -94,17 +101,21 @@ module.exports = {
                                 .setStyle('DANGER')
                                 .setDisabled(true)
                         )
-                    try {
+                    if (banTarget.bannable) {
                         try {
-                            await banTarget.send({ content: null, embeds: [embedTargetBanReason] });
-                        } catch (errorTwo) {
-                            null;
-                        } finally {
-                            await interaction.guild.members.ban(banTarget, { reason: `${banReason} | Banned by ${currentUser.tag} (${currentUser.id})` });
-                            await i.update({ content: `You have banned ${banTarget}!\nReason: ${banReason}`, components: [banRowConfirmed], ephemeral: isEphemeral });;
+                            try {
+                                await banTarget.send({ content: null, embeds: [embedTargetBanReason] });
+                            } catch (errorTwo) {
+                                null;
+                            } finally {
+                                await interaction.guild.members.ban(banTarget, { reason: `${banReason} | Banned by ${currentUser.tag} (${currentUser.id})` });
+                                await i.update({ content: `You have banned ${banTarget}!\nReason: ${banReason}`, components: [banRowConfirmed], ephemeral: isEphemeral });;
+                            }
+                        } catch (error) {
+                            return i.update(`Failed to ban **${banTarget}**!\nError: ${error}`)
                         }
-                    } catch (error) {
-                        return i.update(`Failed to ban **${banTarget}**!\nError: ${error}`)
+                    } else if (!banTarget.bannable) {
+                        await i.update({ content: null, embeds: [embedTargetNotBannable], ephemeral: isEphemeral });
                     }
                 }
             });

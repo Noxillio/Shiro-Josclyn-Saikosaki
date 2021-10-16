@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed, MessageActionRow, MessageButton, Permissions } = require('discord.js');
+const { MessageEmbed, MessageActionRow, MessageButton, Permissions, Collection } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -20,7 +20,8 @@ module.exports = {
         const currentGuild = interaction.guild;
         const currentMember = interaction.member;
         const currentUser = interaction.user;
-        const targetUser = interaction.options.getUser('user');
+        const user = interaction.options.getUser('user');
+        const targetMember = interaction.guild.members.cache.get(`${user.id}`);
         const targetRole = interaction.options.getRole('role');
 
         // Embeds
@@ -38,14 +39,14 @@ module.exports = {
 
         const embedSuccess = new MessageEmbed()
             .setTitle(':white_check_mark: | Success!')
-            .setDescription(`Applied ${targetRole} to ${targetUser}!`)
+            .setDescription(`Applied ${targetRole} to ${targetMember}!`)
             .setColor('#00ff00')
             .setAuthor(shiroSaikosaki.tag, shiroSaikosaki.avatarURL({ format: "png", size: 512 }))
 
         if (currentMember.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) {
             try {
                 // Add target role to member ??
-                await interaction.guild.members.add(targetUser, { roles: [targetRole] });
+                await targetMember.roles.add([`${targetRole.id}`]);
             } catch (error) {
                 const embedError = new MessageEmbed() // Forgetful
                     .setTitle(':x: | You failed, Suzuko!')

@@ -37,6 +37,13 @@ module.exports = {
             .setAuthor(shiroSaikosaki.tag, shiroSaikosaki.avatarURL({ format: "png", size: 512 }))
             .setImage('https://i.ibb.co/HBKzzgq/GAME.gif')
 
+        const embedTargetNotKickable = new MessageEmbed()
+            .setTitle('To Be Advised!')
+            .setDescription(`The Discord user (${kickTarget}) is not kickable by any means!\n**-!- [ Possible errors ] -!-\n\n**Missing permission(s):\n- \`BAN_MEMBERS\`\n\nRank:\n- The target user (${kickTarget}) may be of a __higher__ rank than the client (${shiroSaikosaki}).`)
+            .setColor('#c21313')
+            .setAuthor(shiroSaikosaki.tag, shiroSaikosaki.avatarURL({ format: "png", size: 512 }))
+            .setImage('https://i.ibb.co/mJmKThP/system-failure-system-down.gif')
+
         if (interaction.guild.available === true) {
             if (currentMember.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) {
                 const kickRow = new MessageActionRow()
@@ -92,17 +99,21 @@ module.exports = {
                                 .setStyle('DANGER')
                                 .setDisabled(true)
                         )
-                    try {
+                    if (kickTarget.kickable) {
                         try {
-                            await kickTarget.send({ content: null, embeds: [embedTargetKickReason] });
-                        } catch (errorTwo) {
-                            null;
-                        } finally {
-                            await interaction.guild.members.kick(kickTarget, { reason: `${kickReason} | Kicked by ${currentUser.tag} (${currentUser.id})` });
-                            await i.update({ content: `You have kicked **${kickTarget}**!\nReason: ${kickReason}`, components: [kickRowConfirmed], ephemeral: isEphemeral });
+                            try {
+                                await kickTarget.send({ content: null, embeds: [embedTargetKickReason] });
+                            } catch (errorTwo) {
+                                null;
+                            } finally {
+                                await interaction.guild.members.kick(kickTarget, { reason: `${kickReason} | Kicked by ${currentUser.tag} (${currentUser.id})` });
+                                await i.update({ content: `You have kicked **${kickTarget}**!\nReason: ${kickReason}`, components: [kickRowConfirmed], ephemeral: isEphemeral });
+                            }
+                        } catch (error) {
+                            return i.update(`Failed to kick **${kickTarget}**!\nError: ${error}`)
                         }
-                    } catch (error) {
-                        return i.update(`Failed to kick **${kickTarget}**!\nError: ${error}`)
+                    } else if (!kickTarget.kickable) {
+                        await i.update({ content: null, embeds: [embedTargetNotKickable], ephemeral: isEphemeral });
                     }
                 }
             });
