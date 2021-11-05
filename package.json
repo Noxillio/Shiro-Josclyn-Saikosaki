@@ -1,0 +1,17 @@
+{
+  "name": "shiro",
+  "version": "1.0.0",
+  "description": "Migration from discord.py to discord.js.",
+  "main": "shiro.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "I. Nakajima, Suzuko",
+  "license": "ISC",
+  "dependencies": {
+    "@discordjs/builders": "^0.5.0",
+    "@discordjs/rest": "^0.1.0-canary.0",
+    "discord-api-types": "^0.22.0",
+    "discord.js": "^13.3.1"
+  }
+}
