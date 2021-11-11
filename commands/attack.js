@@ -48,7 +48,9 @@ module.exports = {
             "https://media1.tenor.com/images/18c9d1425138ecb5dd55f789e3a26ea5/tenor.gif",
             "https://media1.tenor.com/images/90a13dba11d0c4acf5761ccc82e976a2/tenor.gif",
             "https://media1.tenor.com/images/528b2e41f027360e3a88db5934dbb9af/tenor.gif",
-            "https://media1.tenor.com/images/dfc5f41115d3d07c7ffdd437349b2db5/tenor.gif"
+            "https://media1.tenor.com/images/dfc5f41115d3d07c7ffdd437349b2db5/tenor.gif",
+            "https://c.tenor.com/qX9DU5WWZkwAAAAd/terry-final-smash-ssbu.gif", // Super Smash Bros. Ultimate - Final Smash [Terry]
+            "https://c.tenor.com/0s-z3ehDcZMAAAAd/progenitor-god-ruptured-heaven-sothis.gif" // Super Smash Bros. Ultimate - Final Smash [Byleth (male)]
         ];
 
         const titles = [
@@ -105,7 +107,7 @@ module.exports = {
             .setColor('#ff0000')
 
         const embedPunish = new MessageEmbed()
-            .setTitle(`${punishTitle}`)
+            .setTitle(`${selectedPunishTitle}`)
             .setDescription(`${currentUser} made a mistake trying to attack themselves.\nReason: There is no valid reason for this action.`)
             .setColor('#ff0000')
             .setImage(selectedPunishGIF)

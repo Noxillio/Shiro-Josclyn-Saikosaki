@@ -6,6 +6,10 @@ function choose(choices) {
     return choices[index];
 }
 
+function wait(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('loli')
@@ -14,12 +18,18 @@ module.exports = {
             option.setName('ephemeral')
                 .setDescription('If true, this will hide the outcome.')
                 .setRequired(true)
+        )
+        .addStringOption(option =>
+            option.setName('passphrase')
+                .setDescription('String to bypass restriction.')
+                .setRequired(false)
         ),
     async execute(interaction) {
         const currentUser = interaction.user;
         const currentGuild = interaction.guild;
         const developer = interaction.client.users.cache.get('635673822934204417');
         const isEphemeral = interaction.options.getBoolean('ephemeral');
+        const passphraseInput = interaction.options.getString('passphrase');
 
         loliFile = [
             "https://c.tenor.com/p28XuV3FnjIAAAAC/anime-loli.gif",
@@ -57,13 +67,24 @@ module.exports = {
             .setColor('#ff0000')
 
         const applicable = ["395744945622745088"];
+        const exclusiveUserId = "395744945622745088";
 
-        for (const userId of applicable) {
-            if (currentUser.id === userId) {
-                await interaction.reply({ content: null, embeds: [embedSuccess], ephemeral: isEphemeral });
-            } else if (currentUser.id !== userId) {
-                await interaction.reply({ content: null, embeds: [embedNotApplicable], ephemeral: true });
+        if (passphraseInput === "Huskyuu" || passphraseInput === "395744945622745088" && currentUser.id !== "395744945622745088") {
+            applicable.push(`${currentUser.id}`)
+        } else if (passphraseInput === null || passphraseInput !== "Huskyuu" || passphraseInput !== "395744945622745088") {
+            null;
+        }
+
+        if (currentUser.id === exclusiveUserId) {
+            await interaction.reply({ content: null, embeds: [embedSuccess], ephemeral: isEphemeral });
+            wait(1000)
+            if (passphraseInput === "Huskyuu" || passphraseInput === "395744945622745088" && currentUser.id !== "395744945622745088") {
+                applicable.pop();
+            } else if (passphraseInput !== "Huskyuu" || passphraseInput !== "395744945622745088" && currentUser.id !== "395744945622745088") {
+                null;
             }
+        } else if (currentUser.id !== exclusiveUserId) {
+            await interaction.reply({ content: null, embeds: [embedNotApplicable], ephemeral: true });
         }
     }
 }

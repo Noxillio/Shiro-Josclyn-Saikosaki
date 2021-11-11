@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed, MessageActionRow, MessageButton, Permissions } = require('discord.js');
+const { MessageEmbed, MessageActionRow, MessageButton, Permissions, IntegrationApplication } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -15,15 +15,27 @@ module.exports = {
         const currentGuild = interaction.guild;
         const currentMember = interaction.member;
         const currentUser = interaction.user;
+        const developer = interaction.client.users.cache.get('635673822934204417');
         const msgContent = interaction.options.getString('content');
 
-        try {
-            await interaction.channel.send({ content: msgContent });
-            await interaction.reply({ content: `:white_check_mark: | Success!`, ephemeral: true });
-        } catch (error) {
-            await interaction.reply({ content: `Error - \`${error}\`` });
-        } finally {
-            await interaction.reply({ content: `Break!`, embeds: null });
+        const developerId = ["635673822934204417"];
+
+        const embedFailure = new MessageEmbed()
+            .setTitle('[:x:] | Failure!')
+            .setDescription(`Your account (${currentUser}) is not registered to this command [Developer exclusive]!`)
+            .setColor('#ff0000')
+
+        for (const id of developerId) {
+            if (currentUser.id === id) {
+                await interaction.reply({ content: `Break! [End of code.]`, embeds: null, ephemeral: true });
+                try {
+                    await interaction.channel.send({ content: msgContent });
+                } catch (error) {
+                    await interaction.editReply({ content: `Error - \`${error}\``, embeds: null, ephemeral: true });
+                } break;
+            } else if (currentUser.id !== id) {
+                await interaction.reply({ content: null, embeds: [embedFailure], ephemeral: true });
+            } break;
         }
     }
 }
