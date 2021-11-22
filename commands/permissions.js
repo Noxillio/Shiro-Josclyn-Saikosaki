@@ -15,7 +15,8 @@ module.exports = {
         const currentGuild = interaction.guild;
         const currentMember = interaction.member;
         const currentUser = interaction.user;
-        const targetUser = interaction.options.getUser('user');
+        const user = interaction.options.getUser('user');
+        const targetUser = interaction.client.users.cache.get(user);
 
         // Permissions
         const permissionAddReactions = new Boolean(targetUser.permissions.has(Permissions.FLAGS.ADD_REACTIONS));
