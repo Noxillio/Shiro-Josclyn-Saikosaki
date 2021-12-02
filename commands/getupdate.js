@@ -26,8 +26,8 @@ module.exports = {
 
         //Embed
         const updateEmbed = new MessageEmbed()
-            .setTitle('Update v2021.12.02.1')
-            .setDescription(`What's new in version \`2021.12.02.1\`:\n\nMigration - New account/software\n\nOld updates:\n- Alpha commands:\n- permissions (broken)\n\nTested commands (working):\n- edit_role_name (new)\n- create_role (new)\n- delete_role (new)\n- create_channel (new)\n- delete_channel (new)\n- kiss (new)\n- slap (new)\n- no_bully (new/exclusive)\n- hug (new)\n- score (new)\n\n**Updated commands:**\n- kick\n- ban\n- pardon\n- apply_role (new/fixed)\n- msg (exclusive/new)\n- request (exclusive/new)\n - loli (exclusive/new)\n - attack (new/migrated)`)
+            .setTitle('Update v2021.12.02.2')
+            .setDescription(`What's new in version \`2021.12.02.2\`:\n\n+ Fixes\n\nMigration - New account/software\n\nOld updates:\n- Alpha commands:\n- permissions (broken)\n\nTested commands (working):\n- edit_role_name (new)\n- create_role (new)\n- delete_role (new)\n- create_channel (new)\n- delete_channel (new)\n- kiss (new)\n- slap (new)\n- no_bully (new/exclusive)\n- hug (new)\n- score (new)\n\n**Updated commands:**\n- kick\n- ban\n- pardon\n- apply_role (new/fixed)\n- msg (exclusive/new)\n- request (exclusive/new)\n - loli (exclusive/new)\n - attack (new/migrated)`)
             .setColor('#c21313')
             .setAuthor(`${developer.tag}`, `${developer.avatarURL({ format: "png", size: 512 })}`)
             .setThumbnail(`${developer.avatarURL({ format: "png", size: 1024 })}`)

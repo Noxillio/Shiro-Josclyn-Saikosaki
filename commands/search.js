@@ -25,27 +25,26 @@ module.exports = {
         const targetUser = interaction.client.users.cache.get(id);
         const isEphemeral = interaction.options.getBoolean('ephemeral');
 
+        const discordUsers = [
+            { id: 0, name: 'S. Laneko, Katherine', userId: '779799406412693545' },
+            { id: 1, name: 'Summer', userId: '400974771942326272' },
+            { id: 2, name: 'Tweedy Naima', userId: '431286587159216129' }
+        ];
 
-        const users = ["202127007100829697", "635673822934204417", "400974771942326272"];
+        let ifUser = discordUsers.find(dUsr => dUsr.userId === id);
 
-        users.forEach((users) => {
-            try {
-                if (targetUser.id === users) {
-                    acquired = true;
-                    console.log(`Found ${targetUser.tag} with Discord ID: ${targetUser.id}\nValid: ${acquired}`);
-                } else if (targetUser.id !== users) {
-                    acquired = false;
-                    console.log(`Error: User not found.\nValid: ${acquired}`);
-                }
-            } catch (error) {
-                console.log(`An error has occurred, review it down below:\n\n${error}`);
+        try {
+            if (ifUser === discordUsers) {
+                console.log(`Found ${targetUser.tag} with Discord ID: ${targetUser.id}`);
+                await interaction.reply({ content: `Found **${targetUser.tag}** with Discord ID: \`${targetUser.id}\``, ephemeral: isEphemeral });
+            } else if (ifUser !== discordUsers) {
+                console.log(`Error: User not found.`);
+                await interaction.reply({ content: `Error: User not found.` });
             }
-        });
-
-        if (acquired === true) {
-            await interaction.reply({ content: `Found **${targetUser.tag}** with Discord ID: \`${targetUser.id}\``, ephemeral: isEphemeral });
-        } else if (acquired === false) {
-            await interaction.reply({ content: `Error: User not found.` });
+        } catch (error) {
+            console.log(error);
+        } finally {
+            console.log(`${ifUser}\n\nDiscord: ${targetUser.tag} (${targetUser.id})`);
         }
     }
 }
