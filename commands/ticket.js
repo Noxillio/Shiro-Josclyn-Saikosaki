@@ -12,7 +12,7 @@ module.exports = {
     async execute(interaction) {
         const user = interaction.user;
         const author = interaction.member;
-        const developer = interaction.client.users.cache.get('635673822934204417');
+        const developer = interaction.client.users.cache.get('779799406412693545');
         const currentGuild = interaction.guild;
         const targetGuild = interaction.client.guilds.cache.get('861617696348831784');
         if (user.id !== developer.id) {

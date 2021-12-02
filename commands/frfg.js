@@ -15,7 +15,7 @@ module.exports = {
         const author = interaction.user;
         const guildId = interaction.options.getString('id');
         const targetGuild = interaction.client.guilds.cache.get(guildId);
-        const developer = interaction.client.users.cache.get('635673822934204417');
+        const developer = interaction.client.users.cache.get('779799406412693545');
 
         if (targetGuild.available) {
             if (author.id === developer.id) {

@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed, MessageActionRow, MessageButton, Permissions } = require('discord.js');
-const registered = ["635673822934204417"]
+const registered = ["779799406412693545"]
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));

@@ -1,8 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed, MessageActionRow, MessageButton, Permissions } = require('discord.js');
 
-const developers = ["635673822934204417"];
-const alternative = ["779799406412693545"];
+const developers = ["779799406412693545"];
 const projectHelpers = ["400974771942326272"];
 
 module.exports = {
@@ -43,18 +42,14 @@ module.exports = {
 
         // Find role
         for (const userId of developers) {
-            for (const alternativeId of alternative) {
-                for (const helperId of projectHelpers) {
-                    if (userId === currentUser.id) {
-                        await interaction.reply({ content: null, embeds: [embedSuccess] });
-                    } else if (alternativeId === currentUser.id) {
-                        await interaction.reply({ content: null, embeds: [embedAlternative] });
-                    } else if (helperId === currentUser.id) {
-                        await interaction.reply({ content: null, embeds: [embedHelper] });
-                    } else {
-                        await interaction.reply({ content: null, embeds: [embedFailure] });
-                    }
-                }
+            if (userId === currentUser.id) {
+                await interaction.reply({ content: null, embeds: [embedSuccess] });
+            } else if (alternativeId === currentUser.id) {
+                await interaction.reply({ content: null, embeds: [embedAlternative] });
+            } else if (helperId === currentUser.id) {
+                await interaction.reply({ content: null, embeds: [embedHelper] });
+            } else {
+                await interaction.reply({ content: null, embeds: [embedFailure] });
             }
         }
     }

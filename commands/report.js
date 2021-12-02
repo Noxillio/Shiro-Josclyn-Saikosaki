@@ -11,7 +11,7 @@ module.exports = {
                 .setRequired(true)
         ),
     async execute(interaction) {
-        const developer = interaction.client.users.cache.get('635673822934204417');
+        const developer = interaction.client.users.cache.get('779799406412693545');
         const currentGuild = interaction.guild;
         const currentUser = interaction.user;
         const shiroSaikosaki = interaction.client.user;

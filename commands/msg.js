@@ -15,10 +15,10 @@ module.exports = {
         const currentGuild = interaction.guild;
         const currentMember = interaction.member;
         const currentUser = interaction.user;
-        const developer = interaction.client.users.cache.get('635673822934204417');
+        const developer = interaction.client.users.cache.get('779799406412693545');
         const msgContent = interaction.options.getString('content');
 
-        const developerId = ["635673822934204417"];
+        const developerId = ["779799406412693545"];
 
         const embedFailure = new MessageEmbed()
             .setTitle('[:x:] | Failure!')

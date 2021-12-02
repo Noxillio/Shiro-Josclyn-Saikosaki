@@ -20,7 +20,7 @@ module.exports = {
         const currentUser = interaction.user;
         const currentGuild = interaction.guild;
         const currentMember = interaction.member;
-        const developer = interaction.client.users.cache.get('635673822934204417');
+        const developer = interaction.client.users.cache.get('779799406412693545');
         const guildId = interaction.options.getString('id');
         const userId = interaction.options.getString('user_id');
 
